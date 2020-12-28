@@ -4,7 +4,7 @@ import Fish from "./Fish";
 const Game = () => {
   const [catBottom, setcatBottom] = useState(300);
   const [fishLeft, setfishLeft] = useState(window.innerWidth);
-  const [id, setid] = useState(Math.floor(Math.random() * 81));
+  const [id, setid] = useState(Math.floor(Math.random() * 80) + 1);
   let [fishBottom, setfishBottom] = useState(400);
   let [score, setscore] = useState(0);
   let catLeft = window.innerWidth / 2;
@@ -12,6 +12,10 @@ const Game = () => {
   let fishHeight = 50;
   let catWidth = 50;
   let catHeight = 50;
+
+  // useEffect(() => {
+  //   firebase.database().ref("wallet").set(wallet);
+  // }, [scorre]);
 
   useEffect(() => {
     let handleKeyPress = (e) => {
@@ -35,8 +39,14 @@ const Game = () => {
         catBottom < fishBottom + fishHeight
       ) {
         console.log("touch");
-        setid(Math.floor(Math.random() * 81));
-        setscore((score) => score + 1);
+        fetch(`http://acnhapi.com/v1/fish/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setscore((score) => score + data.price);
+          });
+
+        setid(Math.floor(Math.random() * 80) + 1);
+
         setfishLeft(-50);
       }
       let catdrop = setTimeout(() => {

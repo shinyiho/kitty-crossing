@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import Header from "./Header";
 import { db } from "./firebase";
+import firebase from "firebase";
 import Game from "./Game";
 import Furniture from "./Furniture";
+import MeowBot from "./MeowBot";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 function App() {
   const [houseware, sethouseware] = useState([]);
   const [misc, setmisc] = useState([]);
@@ -17,8 +18,7 @@ function App() {
   const [bug, setbug] = useState([]);
   const [seacreature, setseacreature] = useState([]);
   const [target, settarget] = useState([]);
-  const [wallet, setwallet] = useState(300000);
-  // let [chosenitem, setchosenitem] = useState([]);
+  const [wallet, setwallet] = useState(499999);
   const [furniturelist, setfurniturelist] = useState([]);
   useEffect(() => {
     const unsubscribe = db.collection("furniturelist").onSnapshot((snapshot) => {
@@ -28,6 +28,15 @@ function App() {
       unsubscribe();
     };
   }, [wallet]);
+  // useEffect(() => {
+  //   firebase
+  //     .database()
+  //     .ref("wallet")
+  //     .once("value")
+  //     .then((snapshot) => {
+  //       setwallet(snapshot.val());
+  //     });
+  // }, []);
 
   useEffect(() => {
     let fetchingDataFromwall = () => {
@@ -177,10 +186,9 @@ function App() {
   }, []);
   let purchase = (name, url, size, price) => {
     let add = true;
-
     var docRef = db.collection("furniturelist");
     docRef.get().then((shot) => {
-      shot.docs.map((doc) => {
+      shot.docs.forEach((doc) => {
         if (doc.data().name === name) {
           console.log("samename");
           db.collection("furniturelist").doc(doc.id).delete();
@@ -192,14 +200,19 @@ function App() {
       if (add === true) {
         console.log("difffername", add);
         db.collection("furniturelist").add({
-          x: 30,
           size: size,
           price: price,
           name: name,
-          y: 50,
           img_url: url,
         });
-
+        firebase
+          .database()
+          .ref("furniture/" + name)
+          .set({
+            name: name,
+            x: 30,
+            y: 50,
+          });
         setwallet(wallet - price);
       }
     });
@@ -258,6 +271,9 @@ function App() {
           </Route>
           <Route path="/earnMoney">
             <Game />
+          </Route>
+          <Route path="/chat">
+            <MeowBot />
           </Route>
           <Route path="/">
             <div className="container">

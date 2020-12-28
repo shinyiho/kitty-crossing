@@ -14,6 +14,9 @@ const Header = () => {
       <Link to="/earnMoney">
         <img className="earnMoney" alt="" src="https://img.icons8.com/ios/100/000000/fish-food.png" />
       </Link>
+      <Link to="/chat">
+        <img className="chat" alt="" src="https://img.icons8.com/android/80/000000/cat.png " />
+      </Link>
     </div>
   );
 };
