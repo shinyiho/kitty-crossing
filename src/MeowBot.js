@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db } from "./firebase";
 import firebase from "firebase";
+
 const MeowBot = () => {
+  const messageEl = useRef(null);
   const [messages, setmessages] = useState([]); //store all the messages
   const [input, setinput] = useState(""); //show word in the input space
   const [response, setresponse] = useState("");
+  let responding;
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener("DOMNodeInserted", (event) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: "smooth" });
+      });
+    }
+  }, []);
   useEffect(() => {
     let unsubscribe;
     unsubscribe = db
@@ -20,11 +31,17 @@ const MeowBot = () => {
   //should wait for searchResponseSen state change and add it to db
   useEffect(() => {
     if (response) {
-      db.collection("messages").add({
-        text: response,
-        user: "cat",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      responding = setTimeout(() => {
+        db.collection("messages").add({
+          text: response,
+          user: "cat",
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        setresponse("");
+      }, Math.random() * 5000);
+      return () => {
+        clearTimeout(responding);
+      };
     }
   }, [response]);
   //searchResponseSen and add user text to db
@@ -59,7 +76,7 @@ const MeowBot = () => {
 
   return (
     <div className="meowbot">
-      <div className="messages">
+      <div className="messages" ref={messageEl}>
         {messages.map(({ id, message }) =>
           message.user === "cat" ? (
             <p key={id} className="catmessages">
