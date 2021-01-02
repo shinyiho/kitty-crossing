@@ -9,7 +9,7 @@ const Furniture = ({ name, url, size, price }) => {
   const w = size.slice(0, size.indexOf("x")) * 100;
   const h = size.slice(size.indexOf("x") + 1, size.length) * 100;
 
-  //download(x,y) last rendering from database
+  // download(x,y) last rendering from database
   useEffect(() => {
     firebase
       .database()
@@ -17,6 +17,7 @@ const Furniture = ({ name, url, size, price }) => {
       .once("value")
       .then((snapshot) => {
         let ob = snapshot.val();
+        console.log("really", ob);
         setpos({ x: ob[name]["x"], y: ob[name]["y"] });
       });
   }, [name]);

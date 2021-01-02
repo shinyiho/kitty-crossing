@@ -169,7 +169,7 @@ const Shop = () => {
       });
     console.log("updatestate");
     // settarget(houseware);
-  }, [houseware]);
+  }, []);
   let purchase = (name, url, size, price) => {
     let add = true;
     const ref = firebase.database().ref("wallet");
@@ -180,15 +180,15 @@ const Shop = () => {
         ref.on("value", onData, onError);
       });
     };
-    const updatestate = () => {
-      firebase
-        .database()
-        .ref("wallet")
-        .once("value")
-        .then((snapshot) => {
-          setwallet(snapshot.val());
-        });
-    };
+    // const updatestate = () => {
+    //   firebase
+    //     .database()
+    //     .ref("wallet")
+    //     .once("value")
+    //     .then((snapshot) => {
+    //       setwallet(snapshot.val());
+    //     });
+    // };
 
     db.collection("furniturelist")
       .get()
@@ -203,7 +203,8 @@ const Shop = () => {
                   .database()
                   .ref("wallet")
                   .set(value + price);
-                updatestate();
+                // updatestate();
+                setwallet((val) => val + price);
               })
               .catch((error) => {
                 console.log("add wrong");
@@ -232,7 +233,8 @@ const Shop = () => {
                 .ref("wallet")
                 .set(value - price);
               console.log("-value");
-              updatestate();
+              // updatestate();
+              setwallet((val) => val - price);
               console.log("updatestate");
             })
             .catch((error) => {
