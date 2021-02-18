@@ -3,11 +3,10 @@ import Cat from "./Cat";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
 import Fish from "./Fish";
+import "./Game.css";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-// import DialogContent from "@material-ui/core/DialogContent";
-// import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 const Game = () => {
@@ -109,7 +108,7 @@ const Game = () => {
   }, [fishLeft, fishWidth, fishHeight, isEnd]);
 
   return (
-    <div>
+    <div className="game">
       <div>{score}</div>
 
       <Fish fishBottom={fishBottom} fishLeft={fishLeft} fishWidth={fishWidth} fishHeight={fishHeight} id={id} />

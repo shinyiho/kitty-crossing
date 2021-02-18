@@ -2,100 +2,26 @@
   text-align: center;
   width: 100vw;
   height: 100vh;
+  background-image: url("./assets/room/room13.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+  /* cursor: url(handpointer.png), auto; */
 }
 body html {
   width: 100vw;
+  margin: 0;
   height: 100vh;
 }
-.Cards {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-/* p {
-  font-size: 12px;
-} */
-.Card {
-  border-radius: 10px;
-  box-shadow: 0px 1px 2px red;
-  margin: 2px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  background: white;
-  align-items: center;
-  min-width: 2%;
-}
-.categories {
-  display: flex;
-  justify-content: space-around;
-  padding: 15px;
-}
-.Cards {
-  background: ivory;
-  width: 100vw;
-}
+
 img {
   width: 50px;
   height: auto;
 }
 
-.dragable {
-  position: absolute;
-}
-.audioplayer {
-  position: absolute;
-}
-.dragable img {
-  width: 100%;
-  height: auto;
-}
 .container {
   position: relative;
   width: 100vw;
   height: 100vh;
-}
-.meowbot {
-  width: 100vw;
-}
-.inputtext {
-  border-top: 1px solid lightgray;
-  display: flex;
-  position: fixed;
-  bottom: 0px;
-  padding: 5px;
-  width: 100vw;
-}
-.text_area {
-  flex: 1;
-  padding: 10px;
-  border: none;
-}
-.send_area {
-  margin-right: 20px;
-  background-color: white;
-  font-weight: bolder;
-  color: coral;
-  border: none;
-}
-
-.messages {
-  overflow-y: scroll;
-  margin: 20px;
-  height: 460px;
-  color: #6a6a6a;
-  display: flex;
-  flex-direction: column;
-}
-.catmessages {
-  font-size: 20px;
-  border-radius: 10px;
-  background-color: rebeccapurple;
-  margin-right: auto;
-}
-.usermessages {
-  font-size: 20px;
-  border-radius: 10px;
-  background-color: pink;
-  margin-left: auto;
 }

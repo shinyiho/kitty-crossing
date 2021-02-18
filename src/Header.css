@@ -1,0 +1,58 @@
+.HeaderCountainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: 2vh;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+}
+.HeaderCountainerOnTop {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+}
+.menubtn {
+  z-index: 10;
+  width: 70px;
+  /* height: fit-content; */
+}
+
+.menubtn:hover {
+  margin: 20px;
+  transition: transform 0.8s ease-in-out;
+  animation: hoverAction 1.2s infinite;
+  /* transform: ; */
+}
+@keyframes hoverAction {
+  0% {
+    transform: scale(1.5) rotate(18deg);
+  }
+  50% {
+    transform: scale(1.5) rotate(-36deg);
+  }
+  100% {
+    transform: scale(1.5) rotate(36deg);
+  }
+}
+.routerOption {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 5px;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: rosybrown;
+  border-style: dotted;
+  border-radius: 10px;
+}
+.routerOption :hover {
+  transition: transform 0.1s ease-in-out;
+  transform: scale(1.1);
+}

@@ -1,0 +1,58 @@
+.meowbot {
+  /* width: 20%; */
+  /* margin: 0; */
+  /* height: fit-content; */
+  /* left: auto; */
+  background-image: url("./assets/cellphone.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  /* position: relative; */
+}
+
+.inputtext {
+  border-top: 1px solid lightgray;
+  display: flex;
+  position: fixed;
+  margin-left: 50px;
+  bottom: 0px;
+  padding: 5px;
+  width: 300px;
+  position: relative;
+}
+.text_area {
+  flex: 1;
+  padding: 10px;
+  border: none;
+}
+.send_area {
+  margin-right: 20px;
+  background-color: white;
+  font-weight: bolder;
+  color: coral;
+  border: none;
+}
+
+.messages {
+  overflow-y: scroll;
+  margin: 0;
+  margin-left: 50px;
+
+  position: relative;
+  height: 700px;
+  width: 300px;
+  color: #6a6a6a;
+  display: flex;
+  flex-direction: column;
+}
+.catmessages {
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: rebeccapurple;
+  margin-right: auto;
+}
+.usermessages {
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: pink;
+  margin-left: auto;
+}

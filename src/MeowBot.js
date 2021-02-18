@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { db } from "./firebase";
 import firebase from "firebase";
+import "./MeowBot.css";
 
 const MeowBot = () => {
   const messageEl = useRef(null);

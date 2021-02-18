@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import firebase from "firebase";
 import { db } from "./firebase";
+import "./Shop.css";
 const Shop = () => {
   const [target, settarget] = useState([]);
   const [wallet, setwallet] = useState();
@@ -244,7 +245,7 @@ const Shop = () => {
       });
   };
   return (
-    <div>
+    <div className="shop">
       <h2 variant="outlined" color="primary">
         ${wallet}
       </h2>

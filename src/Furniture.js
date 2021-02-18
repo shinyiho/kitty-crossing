@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import { db } from "./firebase";
 import firebase from "firebase";
 // import ReactDOM from "react-dom";
+import "./Furniture.css";
 const Furniture = ({ name, url, size, price }) => {
   const [dragging, setdragging] = useState(false);
   const [pos, setpos] = useState({});
@@ -17,7 +18,6 @@ const Furniture = ({ name, url, size, price }) => {
       .once("value")
       .then((snapshot) => {
         let ob = snapshot.val();
-        console.log("really", ob);
         setpos({ x: ob[name]["x"], y: ob[name]["y"] });
       });
   }, [name]);
@@ -42,7 +42,6 @@ const Furniture = ({ name, url, size, price }) => {
         e.preventDefault();
       };
       let onMouseMove = (e) => {
-        console.log("move");
         setpos({
           x: e.clientX - w / 2,
           y: e.clientY - h / 2 - 50,
@@ -59,8 +58,6 @@ const Furniture = ({ name, url, size, price }) => {
   }, [dragging, h, w, name]);
 
   let onMouseDown = (e) => {
-    console.log("down");
-    console.log(e);
     setdragging(true);
 
     e.stopPropagation();

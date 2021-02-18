@@ -1,0 +1,29 @@
+.shop {
+  z-index: 12;
+}
+.Cards {
+  /* background: ivory; */
+  width: 60vw;
+  background-image: url("./assets/shop.png");
+  background-position: center;
+  background-size: cover;
+  padding: 100px;
+  /* height: 100vh;
+
+  width: 100vw; */
+  height: 60vh;
+  left: 20vw;
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+}
+.categories {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+}
+h2 {
+  margin: 0;
+}
