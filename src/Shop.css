@@ -1,29 +1,68 @@
 .shop {
+  font-family: "Cute Font", cursive;
+  font-size: 40px;
   z-index: 12;
 }
-.Cards {
-  /* background: ivory; */
-  width: 60vw;
+.CardsContainer {
+  display: flex;
   background-image: url("./assets/shop.png");
   background-position: center;
-  background-size: cover;
-  padding: 100px;
-  /* height: 100vh;
-
-  width: 100vw; */
-  height: 60vh;
-  left: 20vw;
+  background-size: contain, cover;
+  background-repeat: no-repeat;
+  height: 80vh;
+  width: 90vw;
+  margin: auto;
+  margin-top: 10vh;
+}
+.walletIcon {
+  transform: scale(5.5) rotate(-15deg);
   position: absolute;
+  top: 17vh;
+  left: 22vw;
+  font-size: 20px;
+}
+.money {
+  position: absolute;
+  top: 19vh;
+  left: 20vw;
+  font-size: 50px;
+  transform: rotate(-23deg);
+}
+.Cards {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   overflow-y: scroll;
+  margin: 14vh 17vw 8vh 17vw;
 }
 .categories {
   display: flex;
-  justify-content: space-around;
-  padding: 15px;
+  justify-content: space-evenly;
+  flex: 1;
 }
-h2 {
-  margin: 0;
+.searchInput {
+  border: none;
+  padding: 5px 2px;
+  width: 50%;
+  font-size: 20px;
+  background-color: #f7f2e4;
+}
+.searchItem {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.shopHeader {
+  display: flex;
+  position: relative;
+  top: 200px;
+  left: 28vw;
+  width: 50vw;
+}
+
+.categoriesBtn:hover {
+  transform: scale(1.1);
+  color: orange;
+  transition: ease-in-out;
 }

@@ -33,6 +33,9 @@ const AudioCon = () => {
     <div className="audioplayer">
       {open ? (
         <div className="playerOption">
+          <div className="closebtn" onClick={() => setOpen(false)}>
+            -
+          </div>
           <img src={audiosrc.image_uri} alt="" />
           <h3 className="songName">{audiosrc.name}</h3>
 

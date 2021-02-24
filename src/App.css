@@ -1,5 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Cute+Font&display=swap");
 .App {
-  text-align: center;
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
   background-image: url("./assets/room/room13.jpg");
@@ -7,7 +8,7 @@
   background-size: cover;
   height: 100vh;
   position: relative;
-  /* cursor: url(handpointer.png), auto; */
+  cursor: url("./assets/handpointer.png"), auto;
 }
 body html {
   width: 100vw;
@@ -21,7 +22,17 @@ img {
 }
 
 .container {
-  position: relative;
+  position: absolute;
   width: 100vw;
   height: 100vh;
+}
+.header {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: row-reverse;
+  /* width: fit-content; */
+  right: 0;
+  width: 20px;
+  height: 20px;
 }

@@ -31,6 +31,7 @@ const Furniture = ({ name, url, size, price }) => {
           name: name,
           x: endX,
           y: endY,
+          timeStamp: Date.now(),
         });
     };
     if (dragging) {

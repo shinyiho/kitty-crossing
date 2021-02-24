@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import firebase from "firebase";
 import { db } from "./firebase";
+import walletIcon from "./assets/wallet.png";
+import SearchIcon from "@material-ui/icons/Search";
 import "./Shop.css";
-const Shop = () => {
+const Shop = ({ furniturelist }) => {
   const [target, settarget] = useState([]);
   const [wallet, setwallet] = useState();
   const [houseware, sethouseware] = useState([]);
   const [misc, setmisc] = useState([]);
   const [art, setart] = useState([]);
   const [wall, setwall] = useState([]);
-  const [fossil, setfossil] = useState([]);
-  const [villager, setvillager] = useState([]);
-  const [bug, setbug] = useState([]);
-  const [seacreature, setseacreature] = useState([]);
+  const [search, setSearch] = useState("");
+  // const [fossil, setfossil] = useState([]);
+  // const [villager, setvillager] = useState([]);
+  // const [bug, setbug] = useState([]);
+  // const [seacreature, setseacreature] = useState([]);
 
   useEffect(() => {
     let fetchingDataFromwall = () => {
@@ -23,10 +26,13 @@ const Shop = () => {
           let item = [];
           for (const [key, value] of Object.entries(data)) {
             item.push({
-              name: key,
+              key: key,
+              name: value[0].name["name-USen"],
               url: value[0].image_uri,
               size: value[0].size,
-              price: value[0]["sell-price"],
+              sellprice: value[0]["sell-price"],
+              buyprice: value[0]["buy-price"],
+              tag: value[0].tag,
             });
           }
           setwall(item);
@@ -39,10 +45,13 @@ const Shop = () => {
           let item = [];
           for (const [key, value] of Object.entries(data)) {
             item.push({
-              name: key,
+              key: key,
+              name: value[0].name["name-USen"],
               url: value[0].image_uri,
               size: value[0].size,
-              price: value[0]["sell-price"],
+              sellprice: value[0]["sell-price"],
+              buyprice: value[0]["buy-price"],
+              tag: value[0].tag,
             });
           }
 
@@ -56,10 +65,13 @@ const Shop = () => {
           let item = [];
           for (const [key, value] of Object.entries(data)) {
             item.push({
-              name: key,
+              key: key,
+              name: value.name["name-USen"],
               url: value.image_uri,
               size: "2x2",
-              price: value["sell-price"],
+              sellprice: value["sell-price"],
+              buyprice: value["buy-price"],
+              tag: "",
             });
           }
 
@@ -73,88 +85,91 @@ const Shop = () => {
           let item = [];
           for (const [key, value] of Object.entries(data)) {
             item.push({
-              name: key,
+              key: key,
+              name: value[0].name["name-USen"],
               url: value[0].image_uri,
               size: value[0].size,
-              price: value[0]["sell-price"],
+              sellprice: value[0]["sell-price"],
+              buyprice: value[0]["buy-price"],
+              tag: value[0].tag,
             });
           }
           sethouseware(item);
           settarget(item);
         });
     };
-    let fetchingDataFromSeacreature = () => {
-      fetch("http://acnhapi.com/v1/sea/")
-        .then((response) => response.json())
-        .then((data) => {
-          let item = [];
-          for (const [key, value] of Object.entries(data)) {
-            item.push({
-              name: key,
-              url: value.icon_uri,
-              id: value.id,
-              size: "1x1",
-              price: value.price,
-            });
-          }
-          setseacreature(item);
-        });
-    };
-    let fetchingDataFromBug = () => {
-      fetch("http://acnhapi.com/v1/bugs/")
-        .then((response) => response.json())
-        .then((data) => {
-          let item = [];
-          for (const [key, value] of Object.entries(data)) {
-            item.push({
-              name: key,
-              url: value.icon_uri,
-              id: value.id,
-              size: "1x1",
-              price: value.price,
-            });
-          }
-          setbug(item);
-        });
-    };
-    let fetchingDataFromFossil = () => {
-      fetch("http://acnhapi.com/v1/fossils/")
-        .then((response) => response.json())
-        .then((data) => {
-          let item = [];
-          for (const [key, value] of Object.entries(data)) {
-            item.push({
-              name: key,
-              url: value.image_uri,
-              id: value.id,
-              size: "1x1",
-              price: value.price,
-            });
-          }
-          setfossil(item);
-        });
-    };
-    let fetchingDataFromVillagers = () => {
-      fetch("http://acnhapi.com/v1/villagers/")
-        .then((response) => response.json())
-        .then((data) => {
-          let item = [];
-          for (const [key, value] of Object.entries(data)) {
-            item.push({
-              name: key,
-              url: value.icon_uri,
-              id: value.id,
-              size: "1x1",
-              price: value.price,
-            });
-          }
-          setvillager(item);
-        });
-    };
-    fetchingDataFromVillagers();
-    fetchingDataFromFossil();
-    fetchingDataFromBug();
-    fetchingDataFromSeacreature();
+    // let fetchingDataFromSeacreature = () => {
+    //   fetch("http://acnhapi.com/v1/sea/")
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       let item = [];
+    //       for (const [key, value] of Object.entries(data)) {
+    //         item.push({
+    //           name: key,
+    //           url: value.icon_uri,
+    //           id: value.id,
+    //           size: "1x1",
+    //           price: value.price,
+    //         });
+    //       }
+    //       setseacreature(item);
+    //     });
+    // };
+    // let fetchingDataFromBug = () => {
+    //   fetch("http://acnhapi.com/v1/bugs/")
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       let item = [];
+    //       for (const [key, value] of Object.entries(data)) {
+    //         item.push({
+    //           name: key,
+    //           url: value.icon_uri,
+    //           id: value.id,
+    //           size: "1x1",
+    //           price: value.price,
+    //         });
+    //       }
+    //       setbug(item);
+    //     });
+    // };
+    // let fetchingDataFromFossil = () => {
+    //   fetch("http://acnhapi.com/v1/fossils/")
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       let item = [];
+    //       for (const [key, value] of Object.entries(data)) {
+    //         item.push({
+    //           name: key,
+    //           url: value.image_uri,
+    //           id: value.id,
+    //           size: "1x1",
+    //           price: value.price,
+    //         });
+    //       }
+    //       setfossil(item);
+    //     });
+    // };
+    // let fetchingDataFromVillagers = () => {
+    //   fetch("http://acnhapi.com/v1/villagers/")
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       let item = [];
+    //       for (const [key, value] of Object.entries(data)) {
+    //         item.push({
+    //           name: key,
+    //           url: value.icon_uri,
+    //           id: value.id,
+    //           size: "1x1",
+    //           price: value.price,
+    //         });
+    //       }
+    //       setvillager(item);
+    //     });
+    // };
+    // fetchingDataFromVillagers();
+    // fetchingDataFromFossil();
+    // fetchingDataFromBug();
+    // fetchingDataFromSeacreature();
     fetchingDataFromwall();
     fetchingDataFromhouseware();
     fetchingDataMisc();
@@ -171,7 +186,8 @@ const Shop = () => {
     console.log("updatestate");
     // settarget(houseware);
   }, []);
-  let purchase = (name, url, size, price) => {
+
+  let purchase = (name, url, size, sellprice, buyprice) => {
     let add = true;
     const ref = firebase.database().ref("wallet");
     const getData = (ref) => {
@@ -203,9 +219,9 @@ const Shop = () => {
                 firebase
                   .database()
                   .ref("wallet")
-                  .set(value + price);
+                  .set(value + sellprice);
                 // updatestate();
-                setwallet((val) => val + price);
+                setwallet((val) => val + sellprice);
               })
               .catch((error) => {
                 console.log("add wrong");
@@ -215,7 +231,7 @@ const Shop = () => {
         if (add === true) {
           db.collection("furniturelist").add({
             size: size,
-            price: price,
+            // price: buyprice,
             name: name,
             img_url: url,
           });
@@ -226,16 +242,17 @@ const Shop = () => {
               name: name,
               x: 30,
               y: 50,
+              timeStamp: Date.now(),
             });
           getData(ref)
             .then((value) => {
               firebase
                 .database()
                 .ref("wallet")
-                .set(value - price);
+                .set(value - buyprice);
               console.log("-value");
               // updatestate();
-              setwallet((val) => val - price);
+              setwallet((val) => val - buyprice);
               console.log("updatestate");
             })
             .catch((error) => {
@@ -246,24 +263,33 @@ const Shop = () => {
   };
   return (
     <div className="shop">
-      <h2 variant="outlined" color="primary">
-        ${wallet}
-      </h2>
-      <div className="categories">
-        <div variant="outlined" color="primary" onClick={() => settarget(houseware)}>
-          houseware
+      <div className="shopHeader">
+        <div className="categories">
+          <div className="categoriesBtn" onClick={() => settarget(houseware)}>
+            HouseWare
+          </div>
+          <div className="categoriesBtn" onClick={() => settarget(wall)}>
+            WallDeco
+          </div>
+          <div className="categoriesBtn" onClick={() => settarget(misc)}>
+            Misc
+          </div>
+          <div className="categoriesBtn" onClick={() => settarget(art)}>
+            Art
+          </div>
         </div>
-
-        <div variant="outlined" color="primary" onClick={() => settarget(wall)}>
-          wall
+        <div className="searchItem">
+          <SearchIcon />
+          <input
+            className="searchInput"
+            placeholder="search"
+            type="text"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          ></input>
         </div>
-        <div variant="outlined" color="primary" onClick={() => settarget(misc)}>
-          misc
-        </div>
-        <div variant="outlined" color="primary" onClick={() => settarget(art)}>
-          art
-        </div>
-        <div variant="outlined" color="primary" onClick={() => settarget(seacreature)}>
+        {/* <div variant="outlined" color="primary" onClick={() => settarget(seacreature)}>
           sea creature
         </div>
         <div variant="outlined" color="primary" onClick={() => settarget(bug)}>
@@ -274,21 +300,52 @@ const Shop = () => {
         </div>
         <div variant="outlined" color="primary" onClick={() => settarget(villager)}>
           villager
-        </div>
+        </div> */}
       </div>
-      <div className="Cards">
-        {target.map((item) => {
-          return (
-            <Card
-              key={item.name}
-              name={item.name}
-              url={item.url}
-              size={item.size}
-              price={item.price}
-              onClick={purchase}
-            />
-          );
-        })}
+
+      <div>
+        <img className="walletIcon" alt="" src={walletIcon}></img>
+        <div className="money">${wallet}</div>
+      </div>
+
+      <div className="CardsContainer">
+        <div className="Cards">
+          {target.map((item) => {
+            if (item.tag.toLowerCase().includes(search) || item.name.toLowerCase().includes(search)) {
+              return (
+                <Card
+                  furniturelist={furniturelist}
+                  key={item.key}
+                  name={item.name}
+                  url={item.url}
+                  size={item.size}
+                  sellprice={item.sellprice}
+                  buyprice={item.buyprice}
+                  tag={item.tag}
+                  onClick={purchase}
+                />
+              );
+            } else {
+              return <div></div>;
+            }
+          })}
+
+          {/* {target.map((item) => {
+            // if(search&&item.tag.includes(search)){}
+            return (
+              <Card
+                key={item.key}
+                name={item.name}
+                url={item.url}
+                size={item.size}
+                sellprice={item.sellprice}
+                buyprice={item.buyprice}
+                tag={item.tag}
+                onClick={purchase}
+              />
+            );
+          })} */}
+        </div>
       </div>
     </div>
   );

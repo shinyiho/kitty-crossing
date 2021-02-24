@@ -1,9 +1,10 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import Shop from "./Shop";
-import Header from "./Header";
+import RouterOpt from "./RouterOpt";
 import { db } from "./firebase";
-
+// import firebase from "firebase";
+import AudioCon from "./AudioCon";
 import Game from "./Game";
 import Furniture from "./Furniture";
 import MeowBot from "./MeowBot";
@@ -18,6 +19,7 @@ function App() {
       unsubscribe();
     };
   }, []);
+
   // useEffect(() => {
   //   firebase.database().ref("wallet").set(wallet);
   // }, [furniturelist, wallet]);
@@ -25,10 +27,14 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
+        <div className="header">
+          <AudioCon />
+          <RouterOpt />
+        </div>
+
         <Switch>
           <Route path="/shop">
-            <Shop />
+            <Shop furniturelist={furniturelist} />
           </Route>
           <Route path="/earnMoney">
             <Game />
@@ -38,9 +44,29 @@ function App() {
           </Route>
           <Route path="/">
             <div className="container">
-              {furniturelist.map(({ id, post }) => {
-                return <Furniture key={id} name={post.name} url={post.img_url} size={post.size} price={post.price} />;
-              })}
+              {furniturelist
+                // .sort((a, b) => {
+                //   let atime = firebase
+                //     .database()
+                //     .ref("furniture")
+                //     .once("value")
+                //     .then((snapshot) => {
+                //       let ob = snapshot.val();
+                //       return ob[a.post.name]["timeStamp"];
+                //     });
+                //   let btime = firebase
+                //     .database()
+                //     .ref("furniture")
+                //     .once("value")
+                //     .then((snapshot) => {
+                //       let ob = snapshot.val();
+                //       return ob[b.post.name]["timeStamp"];
+                //     });
+                //   return btime - atime;
+                // })
+                .map(({ id, post }) => {
+                  return <Furniture key={id} name={post.name} url={post.img_url} size={post.size} price={post.price} />;
+                })}
             </div>
           </Route>
         </Switch>
