@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Cat from "./Cat";
-import Score from "./Score";
-import { Link } from "react-router-dom";
+// import Score from "./Score";
+
 import firebase from "firebase";
 import Fish from "./Fish";
 import "./Game.css";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 const Game = () => {
-  let fishWidth = 50;
-  let fishHeight = 50;
-  let catWidth = 50;
-  let catHeight = 50;
+  let fishWidth = 100;
+  let fishHeight = 100;
+  let catWidth = 100;
+  let catHeight = 100;
   const [open, setOpen] = React.useState(false);
   const [addScore, setaddScore] = useState(false);
-  const [scoreLeft, setscoreLeft] = useState(0);
-  const [scoreBottom, setscoreBottom] = useState(0);
   const [catBottom, setcatBottom] = useState(300);
+  const [catchPhrase, setcatchPhrase] = useState("");
   const [fishes, setfishes] = useState([
     {
       id: Math.floor(Math.random() * 80) + 1,
@@ -43,6 +43,7 @@ const Game = () => {
   let catLeft = window.innerWidth / 2;
   let catdrop;
   let fishmove;
+
   const handleClose = () => {
     setscore(0);
     setOpen(false);
@@ -67,23 +68,25 @@ const Game = () => {
       }, 30);
       let updatedfishlist = fishes.map((fish) => {
         if (
-          catLeft + catWidth >= fish.fishLeft &&
-          catLeft < fish.fishLeft + fishWidth &&
-          catBottom + catHeight > fish.fishBottom &&
-          catBottom < fish.fishBottom + fishHeight
+          //50 & /2is hard index
+          catLeft + 50 + catWidth / 2 >= fish.fishLeft &&
+          catLeft + 50 < fish.fishLeft + fishWidth &&
+          catBottom + 50 + catHeight / 2 > fish.fishBottom &&
+          catBottom + 50 < fish.fishBottom + fishHeight
         ) {
           console.log("touch");
           showAddScore();
           fetch(`http://acnhapi.com/v1/fish/${fish.id}`)
             .then((response) => response.json())
             .then((data) => {
-              setaddScore(Math.floor(data.price / 100));
+              setaddScore(Math.floor(data.price));
+              setcatchPhrase(data["catch-phrase"]);
             });
           setscore((score) => score + addScore);
           return {
             id: Math.floor(Math.random() * 80) + 1,
             fishBottom: (window.innerHeight - fishHeight * 2) * Math.random(),
-            fishLeft: window.innerWidth,
+            fishLeft: window.innerWidth + 100,
           };
         }
         return fish;
@@ -118,35 +121,38 @@ const Game = () => {
   }, [catBottom, istouch]);
 
   useEffect(() => {
-    fishmove = setTimeout(() => {
-      let updatedfishlist = fishes.map((fish) => {
-        if (!isEnd && fish.fishLeft + fishWidth > 0) {
-          fish.fishLeft -= 1;
-          return fish;
-        } else {
-          fish.id = Math.floor(Math.random() * 80) + 1;
-          fish.fishBottom = (window.innerHeight - fishHeight * 2) * Math.random();
-          fish.fishLeft = window.innerWidth;
-          return fish;
-        }
-      });
-      setfishes(updatedfishlist);
-    }, 3);
+    if (!isEnd) {
+      fishmove = setTimeout(() => {
+        let updatedfishlist = fishes.map((fish) => {
+          if (!isEnd && fish.fishLeft + fishWidth > 0) {
+            fish.fishLeft -= 1;
+            return fish;
+          } else {
+            fish.id = Math.floor(Math.random() * 80) + 1;
+            fish.fishBottom = (window.innerHeight - fishHeight * 2) * Math.random();
+            fish.fishLeft = window.innerWidth;
+            return fish;
+          }
+        });
+        setfishes(updatedfishlist);
+      }, 3);
+    }
     return () => {
       clearTimeout(fishmove);
     };
   }, [fishes]);
   let showAddScore = () => {
-    setistouch(true);
-    fishmove = setTimeout(() => {
+    setTimeout(() => {
+      setistouch(true);
+    }, 280);
+    setTimeout(() => {
       setistouch(false);
-    }, 1000);
+    }, 3000);
     //  setscore(false)
   };
 
   return (
     <div className="game">
-      <div>{score + addScore}</div>
       {fishes.map((f, i) => {
         return (
           <Fish
@@ -160,7 +166,21 @@ const Game = () => {
         );
       })}
       <Cat catLeft={catLeft} catBottom={catBottom} catWidth={catWidth} catHeight={catHeight} />
-      {istouch && <Score addScore={addScore} catLeft={catLeft} catBottom={catBottom} />}
+      {istouch && (
+        <div>
+          <div
+            className="Score"
+            style={{
+              position: "absolute",
+              left: `${catLeft + 150}px`,
+              bottom: `${catBottom + 150}px`,
+            }}
+          >
+            +${addScore}
+          </div>
+          <p className="catchPhrase">{catchPhrase}</p>
+        </div>
+      )}
       <Dialog
         open={open}
         aria-labelledby="alert-dialog-title"

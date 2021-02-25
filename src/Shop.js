@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import firebase from "firebase";
-import { db } from "./firebase";
 import walletIcon from "./assets/wallet.png";
 import SearchIcon from "@material-ui/icons/Search";
 import "./Shop.css";
-const Shop = ({ furniturelist }) => {
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+const Shop = ({ furniturelist, funiturelistupdatefromchild }) => {
+  const [open, setOpen] = useState(false);
   const [target, settarget] = useState([]);
   const [wallet, setwallet] = useState();
   const [houseware, sethouseware] = useState([]);
@@ -13,10 +18,6 @@ const Shop = ({ furniturelist }) => {
   const [art, setart] = useState([]);
   const [wall, setwall] = useState([]);
   const [search, setSearch] = useState("");
-  // const [fossil, setfossil] = useState([]);
-  // const [villager, setvillager] = useState([]);
-  // const [bug, setbug] = useState([]);
-  // const [seacreature, setseacreature] = useState([]);
 
   useEffect(() => {
     let fetchingDataFromwall = () => {
@@ -170,8 +171,8 @@ const Shop = ({ furniturelist }) => {
     // fetchingDataFromFossil();
     // fetchingDataFromBug();
     // fetchingDataFromSeacreature();
-    fetchingDataFromwall();
     fetchingDataFromhouseware();
+    fetchingDataFromwall();
     fetchingDataMisc();
     fetchingDataArt();
   }, []);
@@ -183,8 +184,6 @@ const Shop = ({ furniturelist }) => {
       .then((snapshot) => {
         setwallet(snapshot.val());
       });
-    console.log("updatestate");
-    // settarget(houseware);
   }, []);
 
   let purchase = (name, url, size, sellprice, buyprice) => {
@@ -197,69 +196,54 @@ const Shop = ({ furniturelist }) => {
         ref.on("value", onData, onError);
       });
     };
-    // const updatestate = () => {
-    //   firebase
-    //     .database()
-    //     .ref("wallet")
-    //     .once("value")
-    //     .then((snapshot) => {
-    //       setwallet(snapshot.val());
-    //     });
-    // };
+    for (let i = 0; i < furniturelist.length; i++) {
+      if (furniturelist[i]["name"] === name) {
+        let userRef = firebase.database().ref("furniture/" + name);
+        userRef.remove();
+        // db.collection("furniturelist").doc(doc.id).delete();
+        add = false;
 
-    db.collection("furniturelist")
-      .get()
-      .then((shot) => {
-        shot.docs.forEach((doc) => {
-          if (doc.data().name === name) {
-            db.collection("furniturelist").doc(doc.id).delete();
-            add = false;
-            getData(ref)
-              .then((value) => {
-                firebase
-                  .database()
-                  .ref("wallet")
-                  .set(value + sellprice);
-                // updatestate();
-                setwallet((val) => val + sellprice);
-              })
-              .catch((error) => {
-                console.log("add wrong");
-              });
-          }
-        });
-        if (add === true) {
-          db.collection("furniturelist").add({
-            size: size,
-            // price: buyprice,
+        getData(ref)
+          .then((value) => {
+            firebase
+              .database()
+              .ref("wallet")
+              .set(value + sellprice);
+            setwallet((val) => val + sellprice);
+          })
+          .catch((error) => {});
+        funiturelistupdatefromchild(furniturelist.filter((x) => x.name !== name));
+        return;
+      }
+    }
+    if (add === true) {
+      if (wallet - buyprice >= 0) {
+        firebase
+          .database()
+          .ref("furniture/" + name)
+          .set({
             name: name,
+            size: size,
             img_url: url,
+            x: 30,
+            y: 50,
+            timeStamp: Date.now(),
           });
-          firebase
-            .database()
-            .ref("furniture/" + name)
-            .set({
-              name: name,
-              x: 30,
-              y: 50,
-              timeStamp: Date.now(),
-            });
-          getData(ref)
-            .then((value) => {
-              firebase
-                .database()
-                .ref("wallet")
-                .set(value - buyprice);
-              console.log("-value");
-              // updatestate();
-              setwallet((val) => val - buyprice);
-              console.log("updatestate");
-            })
-            .catch((error) => {
-              console.log("minus wrong");
-            });
-        }
-      });
+        getData(ref)
+          .then((value) => {
+            firebase
+              .database()
+              .ref("wallet")
+              .set(value - buyprice);
+            setwallet((val) => val - buyprice);
+          })
+          .catch((error) => {
+            console.log("minus wrong");
+          });
+      } else {
+        setOpen(true);
+      }
+    }
   };
   return (
     <div className="shop">
@@ -347,6 +331,20 @@ const Shop = ({ furniturelist }) => {
           })} */}
         </div>
       </div>
+      <Dialog
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        // aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">" Not enough money! "</DialogTitle>
+        <DialogActions>
+          <Link to="/earnMoney">
+            <Button onClick={() => setOpen(false)} color="primary" autoFocus>
+              Go Fishing
+            </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

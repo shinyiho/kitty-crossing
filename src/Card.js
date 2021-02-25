@@ -4,11 +4,14 @@ const Card = ({ name, url, size, onClick, sellprice, buyprice, furniturelist }) 
   size.trim();
   const [showInfo, setshowInfo] = useState(false);
   const [exist, setexist] = useState(false);
-  // 	const [itemlist]
   useEffect(() => {
-    furniturelist.map(({ post }) => {
-      if (post.img_url === url) setexist(true);
-    });
+    for (let i = 0; i < furniturelist.length; i++) {
+      if (furniturelist[i]["name"] === name) {
+        setexist(true);
+        return;
+      }
+    }
+    setexist(false);
   }, [furniturelist]);
 
   return (

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { db } from "./firebase";
 import firebase from "firebase";
-// import ReactDOM from "react-dom";
 import "./Furniture.css";
 const Furniture = ({ name, url, size, price }) => {
   const [dragging, setdragging] = useState(false);
@@ -27,8 +25,7 @@ const Furniture = ({ name, url, size, price }) => {
       firebase
         .database()
         .ref("furniture/" + name)
-        .set({
-          name: name,
+        .update({
           x: endX,
           y: endY,
           timeStamp: Date.now(),
@@ -36,7 +33,7 @@ const Furniture = ({ name, url, size, price }) => {
     };
     if (dragging) {
       let onMouseUp = (e) => {
-        updateFirebase(e.clientX - w / 2, e.clientY - h / 2 - 50);
+        updateFirebase(e.clientX - w / 2, e.clientY - h / 2);
         document.removeEventListener("mousemove", onMouseMove);
         document.removeEventListener("mouseup", onMouseUp);
         e.stopPropagation();
@@ -45,7 +42,7 @@ const Furniture = ({ name, url, size, price }) => {
       let onMouseMove = (e) => {
         setpos({
           x: e.clientX - w / 2,
-          y: e.clientY - h / 2 - 50,
+          y: e.clientY - h / 2,
         });
         e.stopPropagation();
         e.preventDefault();
