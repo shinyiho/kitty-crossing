@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/kitty-crossing/static/css/main.f59c6f81.chunk.css",
+    "main.js": "/kitty-crossing/static/js/main.652e19bb.chunk.js",
+    "main.js.map": "/kitty-crossing/static/js/main.652e19bb.chunk.js.map",
+    "runtime-main.js": "/kitty-crossing/static/js/runtime-main.da6262a7.js",
+    "runtime-main.js.map": "/kitty-crossing/static/js/runtime-main.da6262a7.js.map",
+    "static/js/2.8efb521d.chunk.js": "/kitty-crossing/static/js/2.8efb521d.chunk.js",
+    "static/js/2.8efb521d.chunk.js.map": "/kitty-crossing/static/js/2.8efb521d.chunk.js.map",
+    "index.html": "/kitty-crossing/index.html",
+    "static/css/main.f59c6f81.chunk.css.map": "/kitty-crossing/static/css/main.f59c6f81.chunk.css.map",
+    "static/js/2.8efb521d.chunk.js.LICENSE.txt": "/kitty-crossing/static/js/2.8efb521d.chunk.js.LICENSE.txt",
+    "static/media/MeowBot.css": "/kitty-crossing/static/media/cellphone.76544085.png",
+    "static/media/cellphoneIcon.8e55ff1e.png": "/kitty-crossing/static/media/cellphoneIcon.8e55ff1e.png",
+    "static/media/fishIcon.b2339e7e.png": "/kitty-crossing/static/media/fishIcon.b2339e7e.png",
+    "static/media/App.css": "/kitty-crossing/static/media/room13.557649b0.jpg",
+    "static/media/houseIcon.59b4b0d7.png": "/kitty-crossing/static/media/houseIcon.59b4b0d7.png",
+    "static/media/net.eebf8fe8.png": "/kitty-crossing/static/media/net.eebf8fe8.png",
+    "static/media/Game.css": "/kitty-crossing/static/media/ocean9.8b97fc62.jpg",
+    "static/media/Shop.css": "/kitty-crossing/static/media/shop.94e3cc90.png",
+    "static/media/shopIcon.b90fcfc2.png": "/kitty-crossing/static/media/shopIcon.b90fcfc2.png",
+    "static/media/wallet.4ded017b.png": "/kitty-crossing/static/media/wallet.4ded017b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da6262a7.js",
+    "static/js/2.8efb521d.chunk.js",
+    "static/css/main.f59c6f81.chunk.css",
+    "static/js/main.652e19bb.chunk.js"
+  ]
+}
